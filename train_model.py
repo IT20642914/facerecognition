@@ -5,6 +5,8 @@ from PIL import Image
 
 model = cv2.face.LBPHFaceRecognizer_create()
 path = './dataset'
+MIN_FACE_DIMENSIONS = (1000, 900)  # Set your minimum desired dimensions
+
 
 def getImagesWithID(path):
     imagePaths = [os.path.join(path, f) for f in os.listdir(path)]
@@ -14,6 +16,12 @@ def getImagesWithID(path):
     for imagePath in imagePaths:
         faceImg = Image.open(imagePath).convert('L')
         faceNp = np.array(faceImg, 'uint8')
+         # Dimension check
+        height, width = faceNp.shape
+        if height < MIN_FACE_DIMENSIONS[0] or width < MIN_FACE_DIMENSIONS[1]:
+            print(f"Image {imagePath} is too small. Skipping...")
+            continue  # Skip to the next image
+
         try:
             user_id = int(os.path.split(imagePath)[-1].split('.')[0])
             name = os.path.split(imagePath)[-1].split('.')[2]

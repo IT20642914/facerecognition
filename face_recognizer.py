@@ -24,7 +24,7 @@ while True:
         Id, conf = recognizer.predict(gray[y:y+h, x:x+w])
 
         # Check if confidence is below threshold
-        if conf > 50:
+        if conf > 90:
             if Id in names_mapping:  # Check if ID exists in the mapping
                 name = names_mapping[Id]
             else:

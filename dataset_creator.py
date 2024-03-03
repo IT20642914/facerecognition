@@ -28,9 +28,6 @@ video_path = '20240302_234719.mp4'
 name = input('Enter user name: ')
 id = input('Enter user id: ')
 
-# # Create dataset subfolder 
-# user_folder = os.path.join('dataset', f'User.{id}.{name}')
-# os.makedirs(user_folder, exist_ok=True) 
 
 # Open the video file
 video_capture = cv2.VideoCapture(video_path)
@@ -53,9 +50,15 @@ while sample_faces < 200:
             sample_faces += 1
             face_image = gray[y:y+h, x:x+w]
             augmented_image = apply_augmentations(face_image.copy())
-            save_path = os.path.join('dataset', f'{id}.{sample_faces}.{name}.jpg')
-            cv2.imwrite(save_path, augmented_image)
-
+            
+             # Save original face image
+            face_save_path = os.path.join('dataset', f'{id}.{sample_faces}.{name}_face.jpg')
+            cv2.imwrite(face_save_path, face_image)
+            
+            # Save augmented image
+            augmented_save_path = os.path.join('dataset', f'{id}.{sample_faces}.{name}_augmented.jpg')
+            cv2.imwrite(augmented_save_path, augmented_image)
+            
             # Optional Visualization 
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2) 
             cv2.imshow("Face Extraction", frame[y:y+h*2, x:x+w*2]) 
