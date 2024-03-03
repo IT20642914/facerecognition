@@ -15,7 +15,7 @@ def getImagesWithID(path):
         faceImg = Image.open(imagePath).convert('L')
         faceNp = np.array(faceImg, 'uint8')
         try:
-            user_id = int(os.path.split(imagePath)[-1].split('.')[1])
+            user_id = int(os.path.split(imagePath)[-1].split('.')[0])
             name = os.path.split(imagePath)[-1].split('.')[2]
         except ValueError:
             print('No ID found', imagePath, os.path.split(imagePath)[-1].split('.')[1])

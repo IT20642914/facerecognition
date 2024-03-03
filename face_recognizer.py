@@ -24,13 +24,14 @@ while True:
         Id, conf = recognizer.predict(gray[y:y+h, x:x+w])
 
         # Check if confidence is below threshold
-       
-        if Id in names_mapping:  # Check if ID exists in the mapping
-             name = names_mapping[Id]
-        else:
-            name = "Unknown"
+        if conf > 50:
+            if Id in names_mapping:  # Check if ID exists in the mapping
+                name = names_mapping[Id]
+            else:
+                name = "Unknown"
         cv2.putText(img, str(name), (x, y+h), font, 1, (0, 255, 0), 2)
     cv2.imshow('Face Recognizer', img)
+    
     if cv2.waitKey(1) == ord('q'):
         break
 
